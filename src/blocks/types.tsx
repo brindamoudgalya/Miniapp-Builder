@@ -457,4 +457,15 @@ export const BlockTypes: { [key: string]: BlockType } = {
     createdBy: "seam",
     fullscreenEdit: false,
   },
+  "Temp_app": { 
+    type: "Temp_app",
+    displayName: "temp_app",
+    displayDescription: "temp_description",
+    icon: "Temp_appIcon", // TODO: insert your app icon here
+    deprecated: false,
+    doesBlockPost: true,
+    doesBlockEdit: true,
+    createdBy: "basilisk",
+    fullscreenEdit: false,
+},
 };
