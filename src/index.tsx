@@ -60,6 +60,38 @@ signInWithEmailAndPassword(auth, "test@example.com", "password").catch((error) =
   }
 });
 
+interface AnswerChoiceProps {
+  text: string;
+  onClick: () => void;
+}
+
+interface QuestionProps {
+  question: string;
+  answers: string[];
+  onAnswerClick: (answer: string) => void;
+}
+
+const Question: React.FC<QuestionProps> = ({ question, answers, onAnswerClick }) => {
+  return (
+    <div className="seam">
+      <div className="question">{question}</div>
+      <div className="answer-grid">
+        {answers.map((answer, index) => (
+          <AnswerChoice key={index} text={answer} onClick={() => onAnswerClick(answer)} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const AnswerChoice: React.FC<AnswerChoiceProps> = ({ text, onClick }) => {
+  return (
+    <div className="answer-choice" onClick={onClick}>
+      {text}
+    </div>
+  );
+};
+
 ReactDOM.render(
   <React.StrictMode>
     <IonApp className="seam">
