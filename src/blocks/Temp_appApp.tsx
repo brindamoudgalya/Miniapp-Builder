@@ -45,6 +45,7 @@ export const Temp_appComposerComponent = ({ model, done }: ComposerComponentProp
     } else {
       setResult("Incorrect. The correct answer was " + correctAnswer);
     }
+    done(model);
   };
 
   const decodeHtml = (html: string) => {
