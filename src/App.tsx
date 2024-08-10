@@ -1,10 +1,12 @@
-import { useState } from "react";
+import React, { useState } from 'react';
 import Composer from "./Composer/Composer";
 import { IonHeader, IonContent, IonPage } from "@ionic/react";
 import Feed from "./Feed";
 import { BlockModel } from "./blocks/types";
 import { makeStyles } from "@mui/styles";
 import { QuestionMarkOutlined } from "@mui/icons-material";
+import QuizApp from './QuizApp';  // Import the QuizApp component
+import './App.css';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -40,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function App() {
+const App: React.FC = () => {
   const classes = useStyles();
   const [loadedPosts, setLoadedPosts] = useState<BlockModel[]>([
     {
@@ -51,33 +53,51 @@ export default function App() {
       uuid: '1',
     }
   ]);
+  const [showQuiz, setShowQuiz] = useState(false); // New state for showing the quiz
 
   function addNewPost(newPost: BlockModel) {
     setLoadedPosts((prevPosts: BlockModel[]) => [newPost, ...prevPosts]);
   }
 
   return (
+
+    // ...
+    // change this from IonPage to div and see what happens??
+    // idk what's going on but layout is [sort of] how i want it, it's just not linking pages properly.
+    // so like <div className={classes.noScrollBar}> ... and change endcap of IonPage to div also
+    // ...
     <IonPage className={classes.noScrollBar}>
-      <div className={classes.headerBorder}>
-        <IonHeader class="ion-no-border border-b-[2px] border-seam-black/[5%]">
-          <div className="flex items-center justify-between bg-white px-4 py-4" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
-            <div className="p-2 rounded-full bg-seam-gray cursor-pointer hover:bg-seam-gray/50" onClick={() => {window.open("http://docs.getseam.xyz")}}>
-              <QuestionMarkOutlined />
-            </div>
-            <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', maxWidth: '60%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              <h1 style={{ fontSize: 'calc(10px + 2vmin)' }}> Seam Miniapp Builder </h1>
-            </div>
-            <div className={`flex max-w-justify-end items-center text-white rounded-full bg-[#ea3bf7] ${classes.noScrollBar}`} style={{ marginLeft: '16px' }}>
-              <Composer addNewPost={addNewPost} />
-            </div>
+      {showQuiz ? ( // Conditionally render QuizApp or the main app
+        <QuizApp onExit={() => setShowQuiz(false)} />
+      ) : (
+        <>
+          <div className={classes.headerBorder}>
+            <IonHeader class="ion-no-border border-b-[2px] border-seam-black/[5%]">
+              <div className="flex items-center justify-between bg-white px-4 py-4" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+                <div className="p-2 rounded-full bg-seam-gray cursor-pointer hover:bg-seam-gray/50" onClick={() => { window.open("http://docs.getseam.xyz") }}>
+                  <QuestionMarkOutlined />
+                </div>
+                <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', maxWidth: '60%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                  <h1 style={{ fontSize: 'calc(10px + 2vmin)' }}> Seam Miniapp Builder </h1>
+                </div>
+                <div className={`flex max-w-justify-end items-center text-white rounded-full bg-[#ea3bf7] ${classes.noScrollBar}`} style={{ marginLeft: '16px' }}>
+                  <Composer addNewPost={addNewPost} />
+                </div>
+              </div>
+            </IonHeader>
           </div>
-        </IonHeader>
-      </div>
-      <IonContent fullscreen={true} scrollY={false}>
-        <DesktopSidebarWrapper>
-          <Feed loadedPosts={loadedPosts} />
-        </DesktopSidebarWrapper>
-      </IonContent>
+          <IonContent fullscreen={true} scrollY={false}>
+            <DesktopSidebarWrapper>
+              <Feed loadedPosts={loadedPosts} />
+            </DesktopSidebarWrapper>
+            <button className="start-button" onClick={() => setShowQuiz(true)}>
+              Start Quiz Miniapp
+            </button>
+          </IonContent>
+        </>
+      )}
     </IonPage>
   );
 }
+
+export default App;

@@ -1,0 +1,96 @@
+/* General container for the quiz app */
+.seam {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Navigation styles */
+  .navigation {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+  }
+  
+  .back-arrow,
+  .exit-button {
+    font-size: 24px;
+    color: #0288D1;
+    cursor: pointer;
+  }
+  
+  /* Question styling */
+  .question {
+    font-size: 24px;
+    font-weight: 600;
+    color: #0288D1;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+  }
+  
+  /* Answer grid styling */
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+    width: 100%;
+    margin-bottom: 20px;
+  }
+  
+  /* Answer choice box styling */
+  .answer-choice {
+    background-color: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    text-align: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .answer-choice:hover {
+    background-color: #F0F0F0;
+    transform: scale(1.05);
+  }
+  
+  /* Submit button styling */
+  .submit-button {
+    background-color: #0288D1;
+    color: #FFFFFF;
+    font-size: 18px;
+    font-weight: 600;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-align: center;
+    width: 100%;
+    max-width: 300px;
+    margin-top: 20px;
+  }
+  
+  .submit-button:hover {
+    background-color: #0277BD;
+  }
+  
+  /* Results screen styling */
+  .seam h2 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #0288D1;
+    margin-bottom: 20px;
+  }
+  
+  .seam p {
+    font-size: 20px;
+    color: #333;
+  }
+  
