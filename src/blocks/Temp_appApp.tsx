@@ -1,53 +1,74 @@
-import React from 'react';
 import { BlockModel, ComposerComponentProps, FeedComponentProps } from './types';
+import { useState, useEffect } from 'react';
+import axios from 'axios'; // you may need to install axios if you haven't already
 
-// Define your trivia questions and answers
-const questions = [
-  {
-    question: 'What is the capital of France?',
-    answers: ['Paris', 'London', 'Berlin', 'Rome'],
-    correctAnswer: 'Paris'
-  },
-  {
-    question: 'What is the largest planet in our solar system?',
-    answers: ['Earth', 'Saturn', 'Jupiter', 'Uranus'],
-    correctAnswer: 'Jupiter'
-  },
-  // Add more questions here...
-];
+const apiRequestURL = 'https://opentdb.com/api.php?amount=1';
 
-export const Temp_appComposerComponent = ({ model, done }: ComposerComponentProps) => {
-  const [currentQuestion, setCurrentQuestion] = React.useState(0);
-  const [userAnswer, setUserAnswer] = React.useState('');
-  const [score, setScore] = React.useState(0);
-
-  const handleSubmit = () => {
-    if (userAnswer === questions[currentQuestion].correctAnswer) {
-      setScore(score + 1);
-    }
-    setCurrentQuestion(currentQuestion + 1);
-    if (currentQuestion >= questions.length - 1) {
-      done(model);
-    }
-  };
-
+export const Temp_appFeedComponent = ({ model }: FeedComponentProps) => {
+  const { question, answer, result, streak, winPercentage } = model.data;
   return (
     <div>
-      <h1>Trivia Game!</h1>
-      <p>Question {currentQuestion + 1} of {questions.length}</p>
-      <p>{questions[currentQuestion].question}</p>
-      {questions[currentQuestion].answers.map((answer, index) => (
-        <button key={index} onClick={() => setUserAnswer(answer)}>
-          {answer}
-        </button>
-      ))}
-      <button onClick={handleSubmit}>Submit</button>
-      <p>Score: {score}</p>
+      <h1>Question: {question}</h1>
+      <h2>Your answer: {answer}</h2>
+      <h3>Result: {result}</h3>
+      <p>Streak: {streak}</p>
+      <p>Win percentage: {winPercentage}%</p>
     </div>
   );
 };
 
-export const Temp_appFeedComponent = ({ model }: FeedComponentProps) => {
-  // You can display the user's score or other information here
-  return <h1>Trivia Game Results!</h1>;
+export const Temp_appComposerComponent = ({ model, done }: ComposerComponentProps) => {
+  const [question, setQuestion] = useState('');
+  const [answers, setAnswers] = useState<string[]>([]);
+  const [correctAnswer, setCorrectAnswer] = useState('');
+  const [selectedAnswer, setSelectedAnswer] = useState('');
+  const [result, setResult] = useState<string | null>(null);
+  const [streak, setStreak] = useState(0);
+  const [winPercentage, setWinPercentage] = useState(0);
+
+  useEffect(() => {
+    axios.get(apiRequestURL)
+      .then(response => {
+        const questionData = response.data.results[0];
+        const question = decodeHtml(questionData.question);
+        const answers = decodeHtmlArray([...questionData.incorrect_answers, questionData.correct_answer]);
+        setQuestion(question);
+        setCorrectAnswer(answers.includes(questionData.correct_answer) ? questionData.correct_answer : decodeHtml(questionData.correct_answer));
+        setAnswers(answers);
+      })
+      .catch(error => console.error(error));
+  }, []);
+
+  const handleSubmit = () => {
+    if (selectedAnswer === correctAnswer) {
+      setResult("Correct!");
+    } else {
+      setResult("Incorrect. The correct answer was " + correctAnswer);
+    }
+  };
+
+  const decodeHtml = (html: string) => {
+    const textarea = document.createElement('textarea');
+    textarea.innerHTML = html;
+    return textarea.value;
+  };
+
+  const decodeHtmlArray = (array: string[]) => {
+    return array.map(item => decodeHtml(item));
+  };
+
+  return (
+    <div>
+      <h1>Question: {question}</h1>
+      <ul>
+        {answers.map((answer, index) => (
+          <li key={index}>
+            <button onClick={() => setSelectedAnswer(answer)}>{answer}</button>
+          </li>
+        ))}
+      </ul>
+      <button onClick={handleSubmit}>Submit</button>
+      {result && <h3>Result: {result}</h3>}
+    </div>
+  );
 };
