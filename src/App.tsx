@@ -61,42 +61,62 @@ const App: React.FC = () => {
 
   return (
 
-    // ...
-    // change this from IonPage to div and see what happens??
-    // idk what's going on but layout is [sort of] how i want it, it's just not linking pages properly.
-    // so like <div className={classes.noScrollBar}> ... and change endcap of IonPage to div also
-    // ...
+    // okay working ish. ui is better, except now we cannot post. i'll look into it tmrw.
+
     <IonPage className={classes.noScrollBar}>
-      {showQuiz ? ( // Conditionally render QuizApp or the main app
+      {showQuiz ? (
         <QuizApp onExit={() => setShowQuiz(false)} />
       ) : (
         <>
-          <div className={classes.headerBorder}>
-            <IonHeader class="ion-no-border border-b-[2px] border-seam-black/[5%]">
-              <div className="flex items-center justify-between bg-white px-4 py-4" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
-                <div className="p-2 rounded-full bg-seam-gray cursor-pointer hover:bg-seam-gray/50" onClick={() => { window.open("http://docs.getseam.xyz") }}>
-                  <QuestionMarkOutlined />
+          <IonHeader className={`ion-no-border border-b-[2px] border-seam-black/[5%]`}>
+            <div className="flex items-center justify-between bg-white px-4 py-4" style={{ paddingLeft: '16px', paddingRight: '16px' }}>
+              <div className="p-2 rounded-full bg-seam-gray cursor-pointer hover:bg-seam-gray/50" onClick={() => { window.open("http://docs.getseam.xyz") }}>
+                <QuestionMarkOutlined />
+              </div>
+              <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', maxWidth: '60%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                <h1 style={{ fontSize: 'calc(10px + 2vmin)' }}> Seam Miniapp Builder </h1>
+              </div>
+              <div className={`flex max-w-justify-end items-center text-white rounded-full bg-[#ea3bf7] ${classes.noScrollBar}`} style={{ marginLeft: '16px' }}>
+                <button onClick={() => setShowQuiz(true)}> {} + </button>
+              </div>
+            </div>
+          </IonHeader>
+          
+          <IonContent fullscreen={true} scrollY={false}>
+            <div className="app-container">
+              <DesktopSidebarWrapper>
+                <Feed loadedPosts={loadedPosts} />
+              </DesktopSidebarWrapper>
+              
+              {/* ONLY this grid container should be used, remove any other grids */}
+              <div className="grid-container">
+                <div className="grid-item" onClick={() => setShowQuiz(true)}>
+                  <img src="path_to_image1.png" alt="Quiz 1" />
+                  <h3>Start Quiz 1</h3>
+                  <p>Description or details</p>
                 </div>
-                <div style={{ position: 'absolute', left: '50%', transform: 'translateX(-50%)', maxWidth: '60%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  <h1 style={{ fontSize: 'calc(10px + 2vmin)' }}> Seam Miniapp Builder </h1>
+                <div className="grid-item" onClick={() => setShowQuiz(true)}>
+                  <img src="path_to_image2.png" alt="Quiz 2" />
+                  <h3>Start Quiz 2</h3>
+                  <p>Description or details</p>
                 </div>
-                <div className={`flex max-w-justify-end items-center text-white rounded-full bg-[#ea3bf7] ${classes.noScrollBar}`} style={{ marginLeft: '16px' }}>
-                  <Composer addNewPost={addNewPost} />
+                <div className="grid-item" onClick={() => setShowQuiz(true)}>
+                  <img src="path_to_image3.png" alt="Quiz 3" />
+                  <h3>Start Quiz 3</h3>
+                  <p>Description or details</p>
+                </div>
+                <div className="grid-item" onClick={() => setShowQuiz(true)}>
+                  <img src="path_to_image4.png" alt="Quiz 4" />
+                  <h3>Start Quiz 4</h3>
+                  <p>Description or details</p>
                 </div>
               </div>
-            </IonHeader>
-          </div>
-          <IonContent fullscreen={true} scrollY={false}>
-            <DesktopSidebarWrapper>
-              <Feed loadedPosts={loadedPosts} />
-            </DesktopSidebarWrapper>
-            <button className="start-button" onClick={() => setShowQuiz(true)}>
-              Start Quiz Miniapp
-            </button>
+            </div>
           </IonContent>
         </>
       )}
     </IonPage>
+
   );
 }
 
