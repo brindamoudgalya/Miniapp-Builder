@@ -56,52 +56,6 @@ body, html {
 }
 
 
-
-/* Container for the grid layout */
-.grid-container {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-gap: 16px; /* Spacing between grid items */
-  justify-content: center;
-  align-items: center;
-  margin: 20px;
-  padding: 10px;
-}
-
-/* Individual grid items (cards or buttons) */
-.grid-item {
-  background-color: #fff;
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.grid-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0px 8px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Style for the text or content inside grid items */
-.grid-item h3 {
-  font-size: 24px;
-  color: #0288D1;
-  margin-bottom: 10px;
-}
-
-.grid-item p {
-  font-size: 16px;
-  color: #555;
-}
-
-.grid-item img {
-  max-width: 100%;
-  border-radius: 8px;
-  margin-bottom: 12px;
-}
-
 @media (max-width: 768px) {
   .grid-container {
     grid-template-columns: 1fr; /* Stack items in a single column on smaller screens */

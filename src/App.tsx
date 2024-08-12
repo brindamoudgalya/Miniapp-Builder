@@ -60,9 +60,6 @@ const App: React.FC = () => {
   }
 
   return (
-
-    // okay working ish. ui is better, except now we cannot post. i'll look into it tmrw.
-
     <IonPage className={classes.noScrollBar}>
       {showQuiz ? (
         <QuizApp onExit={() => setShowQuiz(false)} />
@@ -88,35 +85,12 @@ const App: React.FC = () => {
                 <Feed loadedPosts={loadedPosts} />
               </DesktopSidebarWrapper>
               
-              {/* ONLY this grid container should be used, remove any other grids */}
-              <div className="grid-container">
-                <div className="grid-item" onClick={() => setShowQuiz(true)}>
-                  <img src="path_to_image1.png" alt="Quiz 1" />
-                  <h3>Start Quiz 1</h3>
-                  <p>Description or details</p>
-                </div>
-                <div className="grid-item" onClick={() => setShowQuiz(true)}>
-                  <img src="path_to_image2.png" alt="Quiz 2" />
-                  <h3>Start Quiz 2</h3>
-                  <p>Description or details</p>
-                </div>
-                <div className="grid-item" onClick={() => setShowQuiz(true)}>
-                  <img src="path_to_image3.png" alt="Quiz 3" />
-                  <h3>Start Quiz 3</h3>
-                  <p>Description or details</p>
-                </div>
-                <div className="grid-item" onClick={() => setShowQuiz(true)}>
-                  <img src="path_to_image4.png" alt="Quiz 4" />
-                  <h3>Start Quiz 4</h3>
-                  <p>Description or details</p>
-                </div>
-              </div>
+              {/* The Grid Layout has been removed */}
             </div>
           </IonContent>
         </>
       )}
     </IonPage>
-
   );
 }
 
