@@ -30,19 +30,11 @@ const QuizApp: React.FC<{ onExit: () => void }> = ({ onExit }) => {
   const handleAnswerClick = (isCorrect: boolean) => {
     if (isCorrect) {
       setCorrectAnswersCount(correctAnswersCount + 1);
-      if (currentQuestionIndex + 1 < questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-      } else {
-        setShowResults(true);
-      }
+    }
+    if (currentQuestionIndex + 1 < questions.length) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
       setShowResults(true);
-    }
-  };
-
-  const handleNextQuestion = () => {
-    if (!showResults) {
-      handleAnswerClick(true);
     }
   };
 
@@ -69,12 +61,12 @@ const QuizApp: React.FC<{ onExit: () => void }> = ({ onExit }) => {
                 />
               ))}
           </div>
-          <button className="submit-button" onClick={handleNextQuestion}>Submit</button>
         </>
       ) : (
         <div className="seam">
           <h2>Quiz Over!</h2>
-          <p>You got {correctAnswersCount} out of {currentQuestionIndex + 1} correct.</p>
+          <p>You got {correctAnswersCount} out of {questions.length} correct.</p>
+          <button className="submit-button" onClick={onExit}>Exit Quiz</button>
         </div>
       )}
     </div>
